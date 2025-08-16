@@ -1,12 +1,18 @@
 # Housing-Data-Analysis
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-This Power BI project presents a comprehensive Housing Data Analysis Dashboard consisting of three interactive pages:\
-**House Market Overview** – Visualizes key trends in the housing market, including average prices, growth rates, and regional comparisons.\
-**Sales Performance** – Highlights sales metrics over time, such as volume, revenue trends, and top-performing locations.\
-**House Type Analysis** – Breaks down data by house types to understand demand patterns, pricing differences, and buyer preferences.\
+<ins>**Data Source - Google BigQuery**</ins>
 
 This dashboard helps stakeholders make data-driven decisions in the real estate domain by providing clear insights into market dynamics and sales performance.
+
+---
+
+## Overview
+This Power BI project presents a comprehensive Housing Data Analysis Dashboard consisting of three interactive pages:
+1. **House Market Overview** – Visualizes key trends in the housing market, including average prices, growth rates, and regional comparisons.
+2. **Sales Performance** – Highlights sales metrics over time, such as volume, revenue trends, and top-performing locations.
+3. **House Type Analysis** – Breaks down data by house types to understand demand patterns, pricing differences, and buyer preferences.
+
 
 ---
 ## Tools/Technologies Used
@@ -74,8 +80,8 @@ This dashboard helps stakeholders make data-driven decisions in the real estate 
    ```
 ---
 ## 🚀 Future Enhancements
-Automate email alerts on the success/failure of data load
-Automate uploading CSV files to Big Query 
+- Automate email alerts on the success/failure of data load
+- Automate uploading CSV files to BigQuery 
 
 ---
 ## 🤝 Contributing
@@ -84,7 +90,7 @@ Feel free to fork this repository, raise a pull request, or open an issue for di
 
 ---
 ## 📜 License
-This project is licensed under the MIT License – see the LICENSE file for details.
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
   
 
