@@ -1,4 +1,6 @@
 # Housing-Data-Analysis
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 This Power BI project presents a comprehensive Housing Data Analysis Dashboard consisting of three interactive pages:\
 **House Market Overview** – Visualizes key trends in the housing market, including average prices, growth rates, and regional comparisons.\
 **Sales Performance** – Highlights sales metrics over time, such as volume, revenue trends, and top-performing locations.\
