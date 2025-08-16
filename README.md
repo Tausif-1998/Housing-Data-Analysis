@@ -29,27 +29,30 @@ This dashboard helps stakeholders make data-driven decisions in the real estate 
    Custom Column and DAX formulas listed below: <br>
 
    <ins>New Columns:</ins>
-   1. Age = _ABS(YEAR(Housing[date (MM/DD/YYYY)].[Date]) - Housing[year_build])_
-   2. Offer Price = _(100*Housing[purchase_price])/(100-Housing[%_change_between_offer_and_purchase])_
-      
+   ```
+   1. Age = _ABS(YEAR(Housing[date (MM/DD/YYYY)].[Date]) - Housing[year_build])
+   2. Offer Price = _(100*Housing[purchase_price])/(100-Housing[%_change_between_offer_and_purchase])
+   ```   
    <ins>Measures|DAX</ins>
-   1. Average Price SQM = _AVERAGE(Housing[sqm_price])_
-   2. Last 12 Month Sales = _CALCULATE(SUM(Housing[purchase_price]),DATESINPERIOD(Housing[date (MM/DD/YYYY)],MAX(Housing[date (MM/DD/YYYY)]),-12,MONTH))_
-   3. Offer to SQM Ratio = _DIVIDE(SUM(Housing[Offer Price]),SUM(Housing[sqm]))_ 
-   4. Sales by Region = _CALCULATE(SUM(Housing[purchase_price]),ALLEXCEPT(Housing,Housing[region]))_
-   5. TotalYTD Sales = _TOTALYTD(SUM(Housing[purchase_price]),Housing[date (MM/DD/YYYY)].[Date])_
-   6. Units sold in latest Year & Quarter = <br>
+   ```
+   1. Average Price SQM = _AVERAGE(Housing[sqm_price])
+   2. Last 12 Month Sales = _CALCULATE(SUM(Housing[purchase_price]),DATESINPERIOD(Housing[date (MM/DD/YYYY)],MAX(Housing[date (MM/DD/YYYY)]),-12,MONTH))
+   3. Offer to SQM Ratio = _DIVIDE(SUM(Housing[Offer Price]),SUM(Housing[sqm]))
+   4. Sales by Region = _CALCULATE(SUM(Housing[purchase_price]),ALLEXCEPT(Housing,Housing[region]))
+   5. TotalYTD Sales = _TOTALYTD(SUM(Housing[purchase_price]),Housing[date (MM/DD/YYYY)].[Date])
+   6. Units sold in latest Year & Quarter = 
         CALCULATE(DISTINCTCOUNT(Housing[house_id]),YEAR(Housing[date (MM/DD/YYYY)])= YEAR(MAX(Housing[date (MM/DD/YYYY)])) && QUARTER(Housing[date (MM/DD/YYYY)])=QUARTER(MAX(Housing[date (MM/DD/YYYY)])))
    7. YOY_Sales_Growth = <br>
-          _Var CurrYearSales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=YEAR(max(Housing[date (MM/DD/YYYY)]))) <br>
-          Var Prevyearsales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=year(max(Housing[date (MM/DD/YYYY)]))-1) <br>
+          _Var CurrYearSales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=YEAR(max(Housing[date (MM/DD/YYYY)]))) 
+          Var Prevyearsales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=year(max(Housing[date (MM/DD/YYYY)]))-1) 
           Return <br>
-              IF(Prevyearsales<>0, (CurrYearSales-Prevyearsales)/Prevyearsales,BLANK())_
+              IF(Prevyearsales<>0, (CurrYearSales-Prevyearsales)/Prevyearsales,BLANK())
    8. Median Sales Price Change = <br>
-     _Var CurrMedianPrice = MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))),Housing[purchase_price]) <br>
-      Var PreMedianPrice =MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))-1),Housing[purchase_price]) <br>
+     _Var CurrMedianPrice = MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))),Housing[purchase_price]) 
+      Var PreMedianPrice =MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))-1),Housing[purchase_price]) 
       RETURN  <br>
-          IF(PreMedianPrice<>0, (CurrMedianPrice-PreMedianPrice)/PreMedianPrice,BLANK())_
+          IF(PreMedianPrice<>0, (CurrMedianPrice-PreMedianPrice)/PreMedianPrice,BLANK())
+   ```
 4. Create three pages and add a canvas background to the pages.
 5. Used the below data visualization charts: <br>
    1. Stacked Bar chart
