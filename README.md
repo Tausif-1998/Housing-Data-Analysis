@@ -8,6 +8,7 @@ This Power BI project presents a comprehensive Housing Data Analysis Dashboard c
 
 This dashboard helps stakeholders make data-driven decisions in the real estate domain by providing clear insights into market dynamics and sales performance.
 
+---
 ## Tools/Technologies Used
 1. Microsoft Excel
 2. Google BigQuery
@@ -15,46 +16,20 @@ This dashboard helps stakeholders make data-driven decisions in the real estate 
 4. DAX
 5. Power BI Service
 
+---
 ## Approach
 1. Importing data from Google BigQuery to Power BI
 2. Transforming Data in Power BI
 3. Data Visualization
 4. Publishing the report
 
+---
 ## Steps Followed
 1. Uploaded CSV file in BigQuery and created a table for it. Data loaded into a BigQuery table.
 2. Connect the BigQuery table to Power BI and import data into Power BI.
 3. Data cleaning, transforming, and modeling in Power BI :
    - Check null values and replace with average values.
    - Created custom columns and Measures
-     
-   Custom Column and DAX formulas listed below: <br>
-
-   <ins>New Columns:</ins>
-   ```
-   1. Age = _ABS(YEAR(Housing[date (MM/DD/YYYY)].[Date]) - Housing[year_build])
-   2. Offer Price = _(100*Housing[purchase_price])/(100-Housing[%_change_between_offer_and_purchase])
-   ```   
-   <ins>Measures|DAX</ins>
-   ```
-   1. Average Price SQM = _AVERAGE(Housing[sqm_price])
-   2. Last 12 Month Sales = _CALCULATE(SUM(Housing[purchase_price]),DATESINPERIOD(Housing[date (MM/DD/YYYY)],MAX(Housing[date (MM/DD/YYYY)]),-12,MONTH))
-   3. Offer to SQM Ratio = _DIVIDE(SUM(Housing[Offer Price]),SUM(Housing[sqm]))
-   4. Sales by Region = _CALCULATE(SUM(Housing[purchase_price]),ALLEXCEPT(Housing,Housing[region]))
-   5. TotalYTD Sales = _TOTALYTD(SUM(Housing[purchase_price]),Housing[date (MM/DD/YYYY)].[Date])
-   6. Units sold in latest Year & Quarter = 
-        CALCULATE(DISTINCTCOUNT(Housing[house_id]),YEAR(Housing[date (MM/DD/YYYY)])= YEAR(MAX(Housing[date (MM/DD/YYYY)])) && QUARTER(Housing[date (MM/DD/YYYY)])=QUARTER(MAX(Housing[date (MM/DD/YYYY)])))
-   7. YOY_Sales_Growth = <br>
-          _Var CurrYearSales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=YEAR(max(Housing[date (MM/DD/YYYY)]))) 
-          Var Prevyearsales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=year(max(Housing[date (MM/DD/YYYY)]))-1) 
-          Return <br>
-              IF(Prevyearsales<>0, (CurrYearSales-Prevyearsales)/Prevyearsales,BLANK())
-   8. Median Sales Price Change = <br>
-     _Var CurrMedianPrice = MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))),Housing[purchase_price]) 
-      Var PreMedianPrice =MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))-1),Housing[purchase_price]) 
-      RETURN  <br>
-          IF(PreMedianPrice<>0, (CurrMedianPrice-PreMedianPrice)/PreMedianPrice,BLANK())
-   ```
 4. Create three pages and add a canvas background to the pages.
 5. Used the below data visualization charts: <br>
    1. Stacked Bar chart
@@ -69,6 +44,47 @@ This dashboard helps stakeholders make data-driven decisions in the real estate 
    10. Page navigation button
 6. Save the project and publish to Power BI Service under the workspace.
 7. Dashboard Web URL: https://app.powerbi.com/view?r=eyJrIjoiYTFjYjY0MjQtMGVhOS00OGE2LTgxNDQtMmFiNjFmMTYwNWRlIiwidCI6IjUyYTdhZTM0LTk2MjQtNDNkYS05MjhlLWRmMTEyZTdlNmFjNCJ9
+
+## DAX Implementation
+
+<ins>New Columns:</ins>
+   ```
+1. Age = _ABS(YEAR(Housing[date (MM/DD/YYYY)].[Date]) - Housing[year_build])
+2. Offer Price = _(100*Housing[purchase_price])/(100-Housing[%_change_between_offer_and_purchase])
+   ```   
+<ins>Measures|DAX</ins>
+   ```
+1. Average Price SQM = _AVERAGE(Housing[sqm_price])
+2. Last 12 Month Sales = _CALCULATE(SUM(Housing[purchase_price]),DATESINPERIOD(Housing[date (MM/DD/YYYY)],MAX(Housing[date (MM/DD/YYYY)]),-12,MONTH))
+3. Offer to SQM Ratio = _DIVIDE(SUM(Housing[Offer Price]),SUM(Housing[sqm]))
+4. Sales by Region = _CALCULATE(SUM(Housing[purchase_price]),ALLEXCEPT(Housing,Housing[region]))
+5. TotalYTD Sales = _TOTALYTD(SUM(Housing[purchase_price]),Housing[date (MM/DD/YYYY)].[Date])
+6. Units sold in latest Year & Quarter = 
+        CALCULATE(DISTINCTCOUNT(Housing[house_id]),YEAR(Housing[date (MM/DD/YYYY)])= YEAR(MAX(Housing[date (MM/DD/YYYY)])) && QUARTER(Housing[date (MM/DD/YYYY)])=QUARTER(MAX(Housing[date (MM/DD/YYYY)])))
+7. YOY_Sales_Growth = 
+          _Var CurrYearSales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=YEAR(max(Housing[date (MM/DD/YYYY)]))) 
+          Var Prevyearsales =CALCULATE(SUM(Housing[purchase_price]),YEAR(Housing[date (MM/DD/YYYY)])=year(max(Housing[date (MM/DD/YYYY)]))-1) 
+          Return 
+              IF(Prevyearsales<>0, (CurrYearSales-Prevyearsales)/Prevyearsales,BLANK())
+8. Median Sales Price Change = 
+     Var CurrMedianPrice = MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))),Housing[purchase_price]) 
+     Var PreMedianPrice =MEDIANX(FILTER(Housing,YEAR(Housing[date (MM/DD/YYYY)].[Date])=YEAR(MAX(Housing[date (MM/DD/YYYY)].[Date]))-1),Housing[purchase_price]) 
+      RETURN  
+          IF(PreMedianPrice<>0, (CurrMedianPrice-PreMedianPrice)/PreMedianPrice,BLANK())
+   ```
+---
+## 🚀 Future Enhancements
+Automate email alerts on the success/failure of data load
+Automate uploading CSV files to Big Query 
+
+---
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome!
+Feel free to fork this repository, raise a pull request, or open an issue for discussion.
+
+---
+## 📜 License
+This project is licensed under the MIT License – see the LICENSE file for details.
 
   
 
